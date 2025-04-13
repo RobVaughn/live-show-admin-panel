@@ -1,0 +1,34 @@
+<?php
+  unset($_SESSION['status-msg']);
+  $checked = "checked";
+?>
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h2>ADD LISTING</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row text-center d-flex justify-context-center">
+              <div class="card card-listings col-12 bg-grey-light d-flex justify-content-center">
+                <div class="card-body">
+                  <form id="listings-form" name="add-entry" method="post" action="actions/add-entry.php" onSubmit="return false;">
+                    <?php include_once ("listings-template.html"); ?>
+                        <button id="confirm-button" class="confirm-button green-button" type="submit" name="add" onClick="checkRequiredFields();">Add</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="card-text mx-auto error-card bg-white">
+                  <span class="error-msg"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

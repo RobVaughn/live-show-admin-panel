@@ -1,0 +1,50 @@
+<!-- Populate: $class to hide help info, $disabled for default slider setting, $readonly for delete -->
+                    <div class="form-group sr-only">
+                      <input type="hidden" id="entry" name="entry" value="<?php echo $entry ?? ""; ?>" readonly />
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-3 mt-3 my-auto text-end" for="date">Date:</label>
+                      <div class="col-8">
+                        <input type="text" class="form-control required" id="date" name="date" placeholder="YYYY-MM-DD" aria-describedby="dateHelp" value="<?php echo $row['gigdate'] ?? ""; ?>" <?php echo $readonly; ?> />
+                        <small id="dateHelp" class="form-text <?php echo $class; ?> help-text text-muted">Date in format YYYY-MM-DD or MM/DD/YYYY</small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-3 mt-3 text-end my-auto" for="location">Location:</label>
+                      <div class="col-8">
+                        <input type="text" class="form-control required" id="location" name="location" placeholder="City, State" aria-describedby="locationHelp" value="<?php echo $row['location'] ?? ""; ?>" <?php echo $readonly; ?> />
+                        <small id="locationHelp" class="form-text <?php echo $class; ?> help-text text-muted">City, State</small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-3 mt-3 text-end my-auto" for="venue">Venue:</label>
+                      <div class="col-8">
+                        <input type="text" class="form-control required" id="venue" name="venue" placeholder="Venue Name" aria-describedby="venueHelp" value="<?php echo $row['venue'] ?? ""; ?>" <?php echo $readonly; ?> />
+                        <small id="venueHelp" class="form-text <?php echo $class; ?> text-muted">Name of venue</small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-3 mt-3 text-end my-auto" for="venue-link">Venue Link:</label>
+                      <div class="col-8">
+                        <input type="text" class="form-control" id="venue-link" name="venue_link" placeholder="Venue Website" aria-describedby="venueWebsiteHelp" value="<?php echo $row['venue-link'] ?? ""; ?>" <?php echo $readonly; ?> />
+                        <small id="venueWebsiteHelp" class="form-text <?php echo $class; ?> text-muted">Venue website (optional)</small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-3 mt-3 text-end my-auto" for="guests">Guests:</label>
+                      <div class="col-8">
+                        <input type="text" class="form-control" id="guests" name="guests" placeholder="Guests" aria-describedby="guestsHelp" value="<?php echo $row['guests'] ?? ""; ?>" <?php echo $readonly; ?> />
+                        <small id="guestsHelp" class="form-text <?php echo $class; ?> text-muted">Other featured performers (optional)</small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-3 text-end">Confirmed:</div>
+                      <div class="col-8 text-start">
+                        <label class="switch my-1" for="confirm-slider">
+                          &nbsp;&nbsp;<input id="confirm-slider" type="checkbox" name="confirmed" value="<?php echo $checked; ?>" <?php echo $checked; ?> />
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group row d-inline-flex justify-content-center">
+                      <div class="col-12 align-self-center">

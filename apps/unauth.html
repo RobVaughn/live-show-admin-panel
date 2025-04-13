@@ -1,0 +1,35 @@
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h2>UNAUTHORIZED ACCESS</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card mx-auto">
+                  <div class="card-body mx-auto bg-grey-light">
+                    <div class="col-12 d-flex bg-grey-dark">
+                      <p class="info-msg mx-auto">Login failed. Click button below to try again.</p>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center bg-white">
+                      <p class="unauth-link info-msg">
+                        <a href="/admin/admin.php?func=forgot-password">Forgot password?</a>
+                      </p>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                      <form class="form-inline" action="/admin/admin.php?func=login" method="post">
+                        <button id="login-button" class="drop-button green-button" type="submit">Login</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

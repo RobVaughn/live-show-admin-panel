@@ -1,0 +1,58 @@
+<?php
+  unset($_SESSION['status-msg']);
+
+  $entry = isset($_POST['entry']) ? $_POST['entry'] : "error";
+  if ($entry === "error")
+    resultsHandler (FALSE, "Missing entry to delete", "main", "fail");
+
+  require_once('actions/db-connector.php');
+  $date = date("Y-m-d", (int) $entry);
+  $conn = dbConnect();
+
+  $sql = 'SELECT gigdate,location,venue,`venue-link`,guests,confirmed FROM `liam-live` WHERE gigdate="' . $date . '"';
+  try {
+		$gig_entry = $conn->query($sql);
+	} catch (Exception $e) {
+		resultsHandler ($conn, "Unable to retrieve listing to delete", "main", "fail");
+	}
+
+  if ($gig_entry->num_rows < 1)
+    resultsHandler ($conn, "Invalid entry for delete from database", "main", "fail");
+  $row = $gig_entry->fetch_assoc();
+  $conn->close();
+
+  $checked = "";
+  $disabled = "disabled";
+  $readonly = "readonly";
+  $class = "hide-help-on-delete";
+?>
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h2>DELETE LISTING</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row text-center d-flex justify-context-center">
+              <div class="card card-listings col-12 bg-grey-light d-flex justify-content-center">
+                <div class="card-body">
+                  <form id="listings-form" name="delete-entry" method="post" action="actions/delete-entry.php" onSubmit="return false;">
+
+                    <?php require_once ("listings-template.html"); ?>
+                        <button id="confirm-button" class="confirm-button red-button" type="submit" name="delete" onClick="submit();">Delete</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="card-text mx-auto bg-white">
+                  <span class="delete-msg">Are you sure you want to delete this entry? Toggle the slider above to confirm.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

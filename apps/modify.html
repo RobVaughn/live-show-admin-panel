@@ -1,0 +1,56 @@
+<?php
+  unset($_SESSION['status-msg']);
+
+  $entry = isset($_POST['entry']) ? $_POST['entry'] : "error";
+  if ($entry === "error")
+    resultsHandler (FALSE, "Missing entry to modify", "main", "fail");
+
+  require_once('actions/db-connector.php');
+  $date = date("Y-m-d", (int) $entry);
+  $conn = dbConnect();
+
+  $sql = 'SELECT gigdate,location,venue,`venue-link`,guests,confirmed FROM `liam-live` WHERE gigdate="' . $date . '"';
+  try {
+		$gig_entry = $conn->query($sql);
+	} catch (Exception $e) {
+		resultsHandler ($conn, "Unable to retrieve listing to modify", "main", "fail");
+	}
+
+  if ($gig_entry->num_rows < 1)
+    resultsHandler ($conn, "Invalid entry for modify in database", "main", "fail");
+	$row = $gig_entry->fetch_assoc();
+  $conn->close();
+  
+  $disabled = $checked = $readonly = $class = "";
+  if ($row['confirmed'] === "1") $checked = "checked";
+?>
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h2>MODIFY LISTING</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row text-center d-flex justify-context-center">
+              <div class="card card-listings col-12 bg-grey-light d-flex justify-content-center">
+                <div class="card-body">
+                  <form id="listings-form" name="modify-entry" method="post" action="actions/modify-entry.php" onSubmit="return false;">
+
+                    <?php require_once ("listings-template.html"); ?>
+                        <button id="confirm-button" class="confirm-button yellow-button" type="submit" name="update" onClick="checkRequiredFields();">Update</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="card-text mx-auto error-card bg-white">
+                  <span class="error-msg"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

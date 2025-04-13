@@ -1,0 +1,71 @@
+<?php include_once('globals.php'); ?>
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h2>GIG LISTINGS</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row text-center d-flex justify-context-center">
+              <div class="card card-listings col-12 bg-light d-flex justify-content-center">
+                <div class="card-body">
+                  <div class="gigs-box">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Location</th>
+                          <th>Venue <span class="small">(links)</span></th>
+                          <th>Confirm</th>
+                          <th>Actions</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+<?php
+  $bg = "bg-grey-dark";
+  require_once('../get-gigs.php');
+  $gigs = getGigListings(true);
+  foreach ($gigs as $gig) {
+      [$date, $location, $venue, $venue_link, $guests, $confirm] = $gig;
+    if ($venue_link != "") $venue = '<a href="'. $venue_link .'" target="_blank">'. $venue .'</a>';
+    $entry = strtotime($date);
+    if ($confirm == "1") $checked = "checked";
+    else $checked = "";
+    echo <<<END
+                  <tr>
+                    <td>${date}</td>
+                    <td>${location}</td>
+                    <td>${venue}</td>
+                    <td class="confirm-slider">
+                      <label class="switch">
+                        <input id="confirm-${entry}" class="" type="checkbox" onChange="toggleSlider($(this).attr('id'),${entry});" ${checked}>
+                        <span class="slider round"></span>
+                      </label>
+                    </td>
+                    <td>
+                      <form id="modify-${entry}" method="post" action="admin.php?func=modify">
+                        <input id="modify-entry-${entry}" type="hidden" name="entry" value="${entry}">
+                        <button class="inline-button yellow-button" form="modify-${entry}" type="submit">Modify</button>
+                      </form>
+                    </td>
+                    <td>
+                      <form id="delete-${entry}" method="post" action="admin.php?func=delete">
+                        <input id="delete-entry-${entry}" type="hidden" name="entry" value="${entry}">
+                        <button class="inline-button red-button" form="delete-${entry}" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+END;
+  }
+?>
+                </tbody>
+			        </table>
+            </div>
+		      </div>
+		    </div>

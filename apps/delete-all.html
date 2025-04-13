@@ -1,0 +1,74 @@
+<?php
+  require_once('actions/db-connector.php');
+  $conn = dbConnect();
+
+  $sql = 'SELECT gigdate FROM `liam-live` ORDER BY gigdate ASC LIMIT 1';
+  try {
+		$date_entry = $conn->query($sql);
+	} catch (Exception $e) {
+		resultsHandler ($conn, "Unable to retrieve oldest listing date", "main", "fail");
+	}
+  $start_date = ((int) $date_entry->num_rows > 0) ? $date_entry->fetch_assoc()['gigdate'] : "";
+  $sql = 'SELECT gigdate FROM `liam-live` ORDER BY gigdate DESC LIMIT 1';
+  try {
+		$date_entry = $conn->query($sql);
+	} catch (Exception $e) {
+		resultsHandler ($conn, "Unable to retrieve newest listing date", "main", "fail");
+	}
+  $end_date = ((int) $date_entry->num_rows > 0) ? $date_entry->fetch_assoc()['gigdate'] : "";
+  $conn->close();
+?>
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h2>DELETE LISTINGS</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row text-center d-flex justify-context-center">
+              <div class="card card-listings col-12 bg-grey-light d-flex justify-content-center">
+                <div class="card-body">
+                  <form id="delete-all-form" name="delete-all" method="post" action="actions/delete-all.php">
+                    <div class="form-group row">
+                      <label class="col-2 mt-3 my-auto text-end" for="date">Start Date:</label>
+                      <div class="col-4">
+                        <input id="delete-start-date" name="start-date" type="text" class="form-control" placeholder="YYYY-MM-DD" aria-describedby="startDateHelp" value="<?php echo $start_date; ?>">
+												<small id="startDateHelp" class="form-text help-text text-muted">Date in format YYYY-MM-DD or MM/DD/YYYY</small>
+                      </div>
+                      <label class="col-2 mt-3 my-auto text-end" for="date">End Date:</label>
+                      <div class="col-4">
+                        <input id="delete-end-date" name="end-date" type="text" class="form-control" placeholder="YYYY-MM-DD" aria-describedby="endDateHelp" value="<?php echo $end_date; ?>">
+                        <small id="endDateHelp" class="form-text help-text text-muted">Date in format YYYY-MM-DD or MM/DD/YYYY</small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-1 offset-1">
+                        <label class="switch my-3" for="confirm-slider">
+                          &nbsp;&nbsp;<input id="confirm-slider" class="confirm-slider" type="checkbox" name="confirm" value="" placeholder="Confirmed" aria-describedby="confirmHelp">
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                      <div class="col text-start my-2">
+                        <span><strong>Are you sure?</strong></span>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row d-flex">
+                      <div class="col-1 mx-auto">
+												<button id="delete-button" class="confirm-button export-button red-button" name="confirm" type="submit">Delete</button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="card-text d-flex">
+                    <span class="info-msg bg-yellow mx-auto">All entries between the dates above will be permanently deleted. Click the toggle above to acknowledge.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

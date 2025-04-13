@@ -1,0 +1,50 @@
+<?php
+  require_once('actions/hcaptcha.php');
+  $data = getSecret();
+  $func = "login";
+?>
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h2>LOGIN</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card mx-auto">
+                  <div class="card-body mx-auto bg-grey-dark">
+                    <div class="card-title justify-content-center">
+                      <div id="captcha" class="h-captcha" data-sitekey="9402980c-368a-410e-b3ac-4c207518d194" data-bind="recaptcha-submit" data-callback="enablePasswordField" data-theme="dark"></div>
+                      <input class="hiddenRecaptcha required" id="hiddenRecaptcha" type="hidden" name="hiddenRecaptcha">
+                    </div>
+                    <div class="col-12 d-flex bg-white">
+                      <p class="mx-auto">Please verify you're human before continuing</p>
+                    </div>
+                    <div class="card-text justify-content-center bg-grey-light">
+                      <form class="form-inline" action="actions/auth-login.php" method="post">
+                        <div class="form-group mx-sm-3 mb-2">
+                          <label for="username" class="sr-only">Username</label>
+                          <input id="username" type="hidden" name="username" autocomplete="username" value="admin" readonly">
+                          <label for="inputPassword1" class="sr-only">Password</label>
+                          <input id="inputPassword1" class="form-control" type="password" name="inputPassword1" autocomplete="current-password" placeholder="Complete Captcha Above" disabled="disabled" required readonly onFocus="this.removeAttribute('readonly');">
+                        </div>
+                        <button id="login-button" class="password-button red-button" type="submit" disabled="disabled">Login</button>
+                      </form>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center bg-white">
+                      <p class="unauth-link">
+                        <a href="/admin/admin.php?func=forgot-password">Forgot password?</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
